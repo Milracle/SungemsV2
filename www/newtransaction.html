@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+    <link rel="stylesheet" href="vendor/waves/waves.min.css" />
+    <link rel="stylesheet" href="vendor/wow/animate.css" />
+    <link rel="stylesheet" href="css/nativedroid2.css" />
+
+    <style>
+        /* Prevent FOUC */
+        
+        body {
+            opacity: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div data-role="page">
+
+        <nd2-include data-src="panel.left.html"></nd2-include>
+
+        <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+            <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
+            <h1 class="wow fadeIn" data-wow-delay='0.4s'>New Buying</h1>
+        </div>
+        <p></p>
+        <div role="main" class="ui-content wow fadeIn" data-inset="false" data-wow-delay="0.2s" style=" padding: 1.5em 26px 2px;">
+            <form>
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+
+                        <div class="box">
+                            <label for="seller">Buyer:</label>
+                            <input type="text" name="buyer" id="buyer" value="" data-clear-btn="true" placeholder="" disabled>
+                            <textarea id="string" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" cols="40" rows="40" name="string" placeholder="Enter formatted string..." style="height: 100px;"></textarea>
+                        </div>
+                        <fieldset data-role="controlgroup">
+                            <a class="ui-btn ui-btn-raised clr-primary waves-effect waves-button waves-effect waves-button" id="btnSave" href="javascript:;">Save</a>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.mobile.min.js"></script>
+    <script src="vendor/waves/waves.min.js"></script>
+    <script src="js/nativedroid2.js"></script>
+    <script src="js/nd2settings.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#buyer').val(localStorage.getItem("Username"));
+            $("#btnSave").click(function () {
+                var buyerToSend = $('#buyer').val();
+                var stringToSend = $('#string').val();
+                var partsOfStr = stringToSend.split('~');
+                if (partsOfStr.length >= 18) {
+                    $.ajax({
+                        type: 'POST',
+                        url: baseUrl + 'download.php',
+                        data: {
+                            string: stringToSend,
+                            buyer: buyerToSend
+                        },
+                        beforeSend: function () {
+                            $.mobile.loading('show');
+                        },
+                        complete: function () {
+                            $.mobile.loading('hide');
+                        },
+                        success: function (data) {
+                            if (data.isSucceed) {
+                                window.location = "landing.html";
+                            } else {
+                                alert("Purchase Failed!");
+                            }
+                        },
+                        error: function () {
+                            alert("Purchase Failed!");
+                        }
+                    });
+                } else {
+                    alert("Incorrect string!");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

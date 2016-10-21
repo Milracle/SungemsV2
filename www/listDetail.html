@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+        
+        
+        <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/nativedroid2.css" />
+        
+        <style>
+            .cell {
+                background-color: gray;
+                border-color: white;
+                border-style: solid;
+                height: 40px;
+                color: rgba(255, 255, 255, 1) !important;
+            }
+        
+        .leftContent {
+            position: absolute;
+            float: left;
+            color: black;
+        }
+        
+        .rightContent {
+            position: relative;
+            float: right;
+            margin: 0 5px 0 5px;
+        }
+        
+        .btnAction {
+            color: white;
+            background-color: black;
+            border-color: white;
+            border-style: solid;
+            width: 100%;
+            height: 50px;
+        }
+        
+        .btnEdit {
+            color: white !important;
+            text-decoration: none;
+        }
+        
+        .ui-table-columntoggle-btn {
+            display: none !important;
+        }
+        
+        #divDetails{
+            position: fixed;
+            float: left;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        td{
+            font-size: 18px;
+        }
+        
+        .co{
+            font-size: 14px;
+            padding-left: 30px;
+        }
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        <div data-role="page" style="height:100%;">
+            <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+                <a href="list2.html" data-ajax='false' class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-chevron-left zmd-2x"></i></a>
+                <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pending</h1>
+                <a href="landing.html" data-ajax='false' class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s'><i class="zmdi zmdi-home zmd-2x"></i></a>
+            </div>
+            
+            <div data-role="popup" id="editDialog">
+                <div data-role="header">
+                    <h1 class='nd-title'>Edit Bank Rate</h1>
+                </div>
+                
+                <div data-role="content">
+                    <p>
+                    <input type="text" name="bankRateEdit" id="bankRateEdit" value="" data-clear-btn="true" placeholder="Enter bank rate">
+                        </p>
+                        <a href="javascript;;" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary" onclick="editBankRate();">Save</a>
+                        <a href="javascript;;" data-rel="back" data-role="button" data-inline="true" class="ui-btn ui-btn-primary">Cancel</a>
+                        </div>
+            </div>
+            
+            <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
+                <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
+                    <thead></thead>
+                    <tbody>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Co.
+                                </div>
+                                <div class="rightContent co" id="companyNames">
+                                    DHARMANDADN DIAMONG DHUDDH DIAMONG DHUDDH DIAMONG DHUDDH
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    GIA NO
+                                </div>
+                                <div class="rightContent" id="GIA">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Stock No.
+                                </div>
+                                <div class="rightContent" id="stockNumber">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Size
+                                </div>
+                                <div class="rightContent" id="size">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Color Purity
+                                </div>
+                                <div class="rightContent" id="colorPurity">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Cut
+                                </div>
+                                <div class="rightContent" id="cut">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Fluorescence
+                                </div>
+                                <div class="rightContent" id="fluorescence">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    RAP
+                                </div>
+                                <div class="rightContent" id="RAP">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Discount/Less
+                                </div>
+                                <div class="rightContent" id="discount">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Bill Information
+                                </div>
+                                <div class="rightContent" id="bill">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Bank Rate
+                                </div>
+                                <div class="rightContent" id="bankRate">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Total Payment
+                                </div>
+                                <div class="rightContent" id="totalPayment">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Comment
+                                </div>
+                                <div class="rightContent" id="comment">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="cell" lang="">
+                            <td>
+                                <div class="leftContent">
+                                    Purchaser
+                                </div>
+                                <div class="rightContent" id="purchaseBy">
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div id="divDetails">
+            <input type="button" id="btnConfirmPickup" class="btnAction" data-role="none" value="Confirm Pickup" onclick="confirmPickup();" />
+            <!--
+             <div class="btnAction" style="text-align:center;height: 27px;padding-top: 8px;">
+             <a href="#editDialog" class="btnEdit" data-rel="popup" data-position-to="window" data-role="none" data-transition="pop"> Edit Entry</a>
+             </div>
+             -->
+            <input type="button" class="btnAction" data-role="none" value="Edit Entry" onclick="editEntry();" />
+            <input type="button" class="btnAction" data-role="none" value="Delete Entry" onclick="deleteEntry();" />
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.mobile.min.js"></script>
+        <script src="vendor/waves/waves.min.js"></script>
+        <script src="js/nativedroid2.js"></script>
+        <script src="js/nd2settings.js"></script>
+        <script src="js/moment.js"></script>
+        <script src="js/common.js"></script>
+        
+        <script type="text/javascript">
+            $(document).bind("mobileinit", function () {
+                             $.mobile.ajaxLinksEnabled(false);
+                             });
+                             
+                             var transaction;
+                             
+                             $(document).ready(function () {
+                                               transaction = JSON.parse(localStorage.getItem("TransactionObj"));
+                                               var dt = new moment(transaction.createdDate);
+                                               
+                                               $("#divTitle").html(localStorage.getItem("TitleString"));
+                                               $("#companyName").html(transaction.companyName);
+                                               $("#GIA").html(transaction.GIA);
+                                               $("#stockNumber").html(transaction.stockNumber);
+                                               $("#size").html(transaction.size);
+                                               $("#colorPurity").html(transaction.color + " " + transaction.purity);
+                                               $("#cut").html(transaction.cut + "-" + transaction.polish + "-" + transaction.symmetry);
+                                               $("#fluorescence").html(transaction.fluorescence);
+                                               $("#RAP").html(transaction.RAP);
+                                               $("#discount").html(transaction.discount);
+                                               $("#bill").html(transaction.bill);
+                                               $("#purchaseBy").html(transaction.purchaseBy + " " + dt.format("DD/MM/YYYY"));
+                                               $("#comment").html(transaction.comment);
+                                               $("#bankRateEdit").val(transaction.bankRate);
+                                               
+                                               calculateTotal();
+                                               
+                                               if (transaction.pickupBy != "") {
+                                               $("#btnConfirmPickup").val("PickUp By: " + transaction.pickupBy.toUpperCase());
+                                               $("#btnConfirmPickup").prop("disabled", true);
+                                               }
+                                               });
+                                               
+                                               function confirmPickup() {
+                                                   var loginUser = localStorage.getItem("Username");
+                                                   if (confirm("Are you sure you want to confirm pickup of this stone?")) {
+                                                       $.ajax({
+                                                              type: 'POST',
+                                                              url: baseUrl + 'confirmPickup.php',
+                                                              data: {
+                                                              transactionId: transaction.id,
+                                                              pickupBy: loginUser
+                                                              },
+                                                              beforeSend: function () {
+                                                              $.mobile.loading('show');
+                                                              },
+                                                              complete: function () {
+                                                              $.mobile.loading('hide');
+                                                              },
+                                                              success: function (data) {
+                                                              if (data.isSucceed) {
+                                                              window.location = "landing.html";
+                                                              } else {
+                                                              alert("Internal error! Try again later!");
+                                                              }
+                                                              },
+                                                              error: function () {
+                                                              alert("Internal error! Try again later!");
+                                                              }
+                                                              });
+                                                   }
+                                               }
+        
+        function editEntry() {
+            $("#editDialog").popup("open");
+        }
+        
+        function deleteEntry() {
+            var loginUser = localStorage.getItem("Username");
+            if (confirm("Are you sure you want to delete this stone?")) {
+                $.ajax({
+                       type: 'POST',
+                       url: baseUrl + 'deleteEntry.php',
+                       data: {
+                       transactionId: transaction.id,
+                       pickupBy: loginUser
+                       },
+                       beforeSend: function () {
+                       $.mobile.loading('show');
+                       },
+                       complete: function () {
+                       $.mobile.loading('hide');
+                       },
+                       success: function (data) {
+                       if (data.isSucceed) {
+                       window.location = "landing.html";
+                       } else {
+                       alert("Internal error! Try again later!");
+                       }
+                       },
+                       error: function () {
+                       alert("Internal error! Try again later!");
+                       }
+                       });
+            }
+        }
+        
+        function saveBankRate() {
+            var payment = $("#totalPayment").html();
+            $.ajax({
+                   type: 'POST',
+                   url: baseUrl + 'editBankRate.php',
+                   data: {
+                   transactionId: transaction.id,
+                   bankRate: transaction.bankRate,
+                   totalPayment: payment
+                   },
+                   beforeSend: function () {
+                   $.mobile.loading('show');
+                   },
+                   complete: function () {
+                   $.mobile.loading('hide');
+                   },
+                   success: function (data) {},
+                   error: function () {}
+                   });
+        }
+        
+        function calculateTotal() {
+            $("#bankRate").html(transaction.bankRate);
+            
+            var rap = parseFloat(transaction.RAP);
+            var size = parseFloat(transaction.size);
+            var dis1 = parseFloat(transaction.discount);
+            var dis2 = parseFloat(transaction.less);
+            var finalPrice = rap;
+            var rate = parseFloat(transaction.bankRate);
+            
+            if (dis1 != 0) {
+                var discount1 = (rap * dis1) / 100;
+                finalPrice = rap - discount1;
+            }
+            if (dis2 != 0 && !isNaN(dis2)) {
+                var discount2 = (finalPrice * dis2) / 100;
+                finalPrice = finalPrice - discount2;
+            }
+            
+            finalPrice = Math.round(finalPrice * size * rate);
+            
+            $("#totalPayment").html(finalPrice);
+        }
+        
+        function editBankRate() {
+            var newBankRate = $("#bankRateEdit").val();
+            
+            if (isNaN(parseFloat(newBankRate))) {
+                alert("Please enter valid bank rate");
+            } else {
+                transaction.bankRate = newBankRate;
+                calculateTotal();
+                saveBankRate();
+            }
+        }
+        </script>
+    </body>
+    
+</html>

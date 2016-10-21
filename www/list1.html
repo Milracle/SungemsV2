@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+        
+        
+        <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/nativedroid2.css" />
+        
+        <style>
+            .inactive {
+                background-color: dimgray;
+                border-color: white;
+                border-style: solid;
+                color: rgba(255, 255, 255, 1) !important;
+            }
+        
+        .active {
+            background-color: rgb(244, 67, 54) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            border-color: white;
+            border-style: solid;
+        }
+        
+        .selection {
+            height: 22px;
+            width: 25px;
+        }
+        
+        .checkbox {
+            margin-top: 8px !important;
+        }
+        
+        .indicatorRed {
+            background: rgba(0, 0, 0, 0) url("img/red.png") no-repeat scroll center center / 21px auto;
+            height: 22px;
+            width: 40px;
+        }
+        
+        .indicatorGreen {
+            background: rgba(0, 0, 0, 0) url("img/green.png") no-repeat scroll center center / 21px auto;
+            height: 22px;
+            width: 40px;
+        }
+        
+        .ui-table-columntoggle-btn {
+            display: none !important;
+        }
+        
+        #divInterfer {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            display: none;
+        }
+        
+        .btnInterfere {
+            padding: 10px 0;
+            width: 50%;
+            position: absolute;
+            bottom: 0px;
+        }
+        
+        .interfereCell{
+            background-color: darkorange;
+            color: white;
+            padding-top: 1.5em !important;
+        }
+        #btnRemoveInterfere {
+            left: 50%;
+            margin: 0 0 0 2px;
+            background-color: darkorange;
+        }
+        
+        tr{
+            height: 65px;
+        }
+        
+        .Name{
+            font-size: 16px;
+            padding-top: 1.3em !important;
+        }
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        <div data-role="page" style="height:100%;">
+            <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+                <a href="landing.html" data-ajax='false' class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-chevron-left zmd-2x"></i></a>
+                <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pending</h1>
+                <a href="javascript:;" onclick="getDatas();" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay" style="font-size: 1.4em;"></i></a>
+            </div>
+            
+            <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
+                
+                <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
+                    <thead></thead>
+                    <tbody>
+                        <!--
+                         <tr class="inactive" lang="">
+                         <td><input type="checkbox"></td>
+                         <td class="indicator"> </td>
+                         <td>Dharmanandan Diamond</td>
+                         </tr>
+                         <tr class="inactive" lang="">
+                         <td><input type="checkbox"></td>
+                         <td class="indicator"> </td>
+                         <td>Bhargovi Impex</td>
+                         </tr>
+                         -->
+                    </tbody>
+                </table>
+                <div id="divInterfer">
+                    <a class="ui-btn ui-btn-raised clr-primary waves-effect waves-button waves-effect waves-button btnInterfere" id="btnInterfere" href="javascript:;">Interfere</a>
+                    <a class="ui-btn ui-btn-raised clr-primary waves-effect waves-button waves-effect waves-button btnInterfere" id="btnRemoveInterfere" href="javascript:;">Remove Interfere</a>
+                </div>
+                <div id="divDetails">
+                </div>
+            </div>
+            
+        </div>
+        
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.mobile.min.js"></script>
+        <script src="vendor/waves/waves.min.js"></script>
+        <script src="js/nativedroid2.js"></script>
+        <script src="js/nd2settings.js"></script>
+        <script src="js/moment.js"></script>
+        <script src="js/common.js"></script>
+        <script type="text/javascript">
+            $(document).bind("mobileinit", function () {
+                             $.mobile.ajaxLinksEnabled(false);
+                             });
+                             var Type = "";
+                             var Company = [];
+                             var Interferer = [];
+                             var ArrSelectedIndex = [];
+                             
+                             function getDatas() {
+                                 $.ajax({
+                                        type: 'GET',
+                                        url: baseUrl + 'getList1.php',
+                                        data: {
+                                        type: Type
+                                        },
+                                        beforeSend: function () {
+                                        $.mobile.loading('show');
+                                        },
+                                        complete: function () {
+                                        $.mobile.loading('hide');
+                                        },
+                                        success: function (data) {
+                                        if (data.isSucceed) {
+                                        Company = data.Company;
+                                        Interferer = data.Interferer;
+                                        buildTable();
+                                        }
+                                        },
+                                        error: function () {}
+                                        });
+                             }
+        
+        function doInterfere(isAdd) {
+            var arrValue = [];
+            for (var i = ArrSelectedIndex.length; i--;) {
+                arrValue.push(Company[ArrSelectedIndex[i]]);
+            }
+            $.ajax({
+                   type: 'POST',
+                   url: baseUrl + 'doInterfere.php',
+                   data: {
+                   type: Type,
+                   values: JSON.stringify(arrValue),
+                   interferer: localStorage.getItem("Username"),
+                   flag: isAdd
+                   },
+                   beforeSend: function () {
+                   $.mobile.loading('show');
+                   },
+                   complete: function () {
+                   $.mobile.loading('hide');
+                   },
+                   success: function (data) {
+                   ArrSelectedIndex = [];
+                   buildTable();
+                   getDatas();
+                   $("#divInterfer").css("display", "none");
+                   },
+                   error: function () {}
+                   });
+        }
+        
+        function chk(index) {
+            if (document.getElementById(index).checked) {
+                if (in_array(ArrSelectedIndex, index) == false)
+                ArrSelectedIndex.push(index);
+            } else {
+                if (in_array(ArrSelectedIndex, index) == true)
+                remove(ArrSelectedIndex, index);
+            }
+            if (ArrSelectedIndex.length > 0)
+            $("#divInterfer").css("display", "block");
+            else
+            $("#divInterfer").css("display", "none");
+            
+            var interfererCount = 0;
+            for (var i = 0; i < ArrSelectedIndex.length; i++) {
+                if (Interferer[ArrSelectedIndex[i]] != "") {
+                    interfererCount += 1;
+                }
+            }
+            if (interfererCount == ArrSelectedIndex.length) {
+                $("#btnRemoveInterfere").css("width", "100%");
+                $("#btnRemoveInterfere").css("left", "0px");
+                $("#btnInterfere").css("display", "none");
+                $("#btnRemoveInterfere").css("display", "block");
+            } else if (interfererCount == 0) {
+                $("#btnInterfere").css("width", "100%");
+                $("#btnRemoveInterfere").css("display", "none");
+                $("#btnInterfere").css("display", "block");
+            } else {
+                $("#btnInterfere").css("width", "50%");
+                $("#btnRemoveInterfere").css("width", "50%");
+                $("#btnRemoveInterfere").css("left", "50%");
+                $("#btnRemoveInterfere").css("display", "block");
+                $("#btnInterfere").css("display", "block");
+            }
+        }
+        
+        function doTask(name) {
+            window.location = "list2.html?companyName=" + name;
+        }
+        
+        function buildTable() {
+            $("#table-column-toggle > tbody").html("");
+            var indicator = "indicatorRed";
+            if (Type == "NORMAL") indicator = "indicatorGreen";
+            for (var i = 0; i < Company.length; i++) {
+                //                if(Interferer[i] != ""){
+                //                    if (in_array(ArrSelectedIndex, i) == false)
+                //                        ArrSelectedIndex.push(i);
+                //                }
+                var checkboxStr = "";
+                
+                if (Type != "COMPLETED") {
+                    var checked = "";
+                    if (in_array(ArrSelectedIndex, i)) checked = "checked";
+                    checkboxStr = "<td class='selection'><input type='checkbox' class='checkbox' onclick='chk(" + i + ");' id='" + i + "' " + checked + "></td>";
+                }
+                var cls = "";
+                if(Interferer[i] != "")
+                cls = "interfereCell";
+                
+                $("#table-column-toggle tbody").append("<tr class='inactive'>" +
+                                                       checkboxStr +
+                                                       "<td class='" + indicator + "'></td>" +
+                                                       "<td onClick='doTask(\"" + Company[i] + "\");' class='Name'>" + Company[i] + "</td><td class='" + cls + "'>" + Interferer[i] + "</td></tr>").trigger("create");
+            }
+        }
+        
+        $(document).ready(function () {
+                          Type = getParameterByName("type");
+                          if (Type != "") {
+                          localStorage.setItem("type", Type);
+                          } else {
+                          Type = localStorage.getItem("type");
+                          }
+                          $("#divTitle").html(localStorage.getItem("TitleString"));
+                          if (Type != "") {
+                          if (Type == "EMERGENCY") localStorage.setItem("TitleString", "Emergency Pending");
+                          else if (Type == "NORMAL") localStorage.setItem("TitleString", "Pickup Pending");
+                          else if (Type == "COMPLETED") localStorage.setItem("TitleString", "Pickup Done");
+                          
+                          getDatas();
+                          setInterval(getDatas, 30000);
+                          }
+                          
+                          $("#btnInterfere").click(function () {
+                                                   if (ArrSelectedIndex.length > 0) {
+                                                   doInterfere(true);
+                                                   }
+                                                   });
+                          
+                          $("#btnRemoveInterfere").click(function () {
+                                                         if (ArrSelectedIndex.length > 0) {
+                                                         doInterfere(false);
+                                                         }
+                                                         });
+                          });
+            </script>
+        
+    </body>
+    
+</html>

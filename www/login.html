@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+    		<link rel="stylesheet" href="css/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="vendor/waves/waves.min.css" />
+        <link rel="stylesheet" href="css/nativedroid2.css" />
+        <title>Login</title>
+        <style type="text/css">
+        .app {
+            bottom: 0;
+            height: 200px;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 82%;
+            width: 200px;
+        }
+        .logo {
+            background: rgba(0, 0, 0, 0) url("img/sunlogo.png") no-repeat scroll center top;
+            height: 50px;
+            left: 50%;
+            margin: -115px 0 0 -112px;
+            padding: 180px 0 0;
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            width: 225px;
+            background-size: 100%;
+        }
+        </style>
+    </head>
+    <body>
+      <div data-role="page">
+          <div class="logo">
+          </div>
+        <div class="app">
+          <select name="dlBuyer" id="dlBuyer" data-role="none" >
+              <option value="">Select User</option>
+              <option value="Bhautik">Bhautik</option>
+              <option value="Damjibhai">Damjibhai</option>
+              <option value="Fenil">Fenil</option>
+              <option value="Hardik">Hardik</option>
+              <option value="Haresh">Haresh</option>
+              <option value="Kaushik">Kaushik</option>
+              <option value="Kirmal">Kirmal</option>
+              <option value="Mahesh">Mahesh</option>
+              <option value="Manish">Manish</option>
+              <option value="Tushar">Tushar</option>
+              <option value="Virendra">Virendra</option>
+              <option value="Vishal">Vishal</option>
+              <option value="Yogesh">Yogesh</option>
+          </select><!--
+            <input type="password"  style="display:none;" name="password" id="password" value="" data-clear-btn="true" placeholder="Password">
+-->
+          <fieldset data-role="controlgroup">
+            <a class="ui-btn ui-btn-raised clr-primary waves-effect waves-button waves-effect waves-button" id="btnEnter" href="javascript:;">Enter</a>
+          </fieldset>
+        </div>
+      </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.mobile.min.js"></script>
+        <script src="vendor/waves/waves.min.js"></script>
+        <script src="js/nativedroid2.js"></script>
+        <script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+              Parse.initialize("c83fcAyGNd5F8vSdmI1aAgAhX2INlnTCL3ADZkZW", "ehe4YbTg5VH82sun0MkTCO6ZYmmghr4kEK5vrw72");
+
+              $("a").attr("data-ajax", "false");
+              $("a").attr("rel", "external");
+
+              $('#btnEnter').click(function() {
+                $('body').load('first-content.html', function() {
+                   //other stuff after the contents have loaded: like the rest of your jquery relating to first.html
+               });
+                var val= $('#dlBuyer').find(":selected").text();
+                if(val == "Select User"){
+                   alert("Please select user");
+                }else{
+                   var buyer = $('#dlBuyer').find(":selected").val();
+                   window.localStorage.setItem("Username", buyer);
+                   location.href = 'landing.html';
+                   /*
+                       var password = $("#password").val();
+                    if(buyer == "Bhautik" || buyer == "Damjibhai" || buyer == "Fenil" || buyer == "Hardik" || buyer == "Kaushik" || buyer == "Manish"){
+                       var query = new Parse.Query("Person")
+                       query.equalTo("Username", buyer);
+                       query.equalTo("Password", password);
+                       query.find({
+                                  success: function(results) {
+                                  $.mobile.loading('hide');
+                                      if(results.length > 0){
+                                          window.localStorage.setItem("Username", buyer);
+                                          location.href = 'landing.html';
+                                      }else{
+                                        alert("Wrong password!");
+                                      }
+                                  },
+                                  error: function(error) {
+                                      alert("Error loading data. Please try again later.");
+                                      $.mobile.loading('hide');
+                                  }
+                        });
+                       }else{
+                           window.localStorage.setItem("Username", buyer);
+                           location.href = 'landing.html';
+                       }*/
+                    }
+              });
+                              
+              $("#dlBuyer").on("change",function(){
+                   /* var buyer = $('#dlBuyer').find(":selected").val();
+                               if(buyer == "Bhautik" || buyer == "Damjibhai" || buyer == "Fenil" || buyer == "Hardik" || buyer == "Kaushik" || buyer == "Manish" ){
+                                $("#password").css("display","block");
+                               }else{
+                                $("#password").css("display","none");
+                               }*/
+              });
+            });
+        </script>
+    </body>
+</html>

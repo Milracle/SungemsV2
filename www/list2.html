@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+        
+        
+        <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/nativedroid2.css" />
+        
+        <style>
+            .cell {
+                background-color: dimgray;
+                border-color: white;
+                border-style: solid;
+                color: rgba(255, 255, 255, 1) !important;
+                height: 70px;
+            }
+        
+        .emergencyIndicator {
+            background: rgba(0, 0, 0, 0) url("img/red.png") no-repeat scroll center center / 21px auto;
+            height: 22px;
+            width: 40px;
+        }
+        
+        .defaultIndicator {
+            background: rgba(0, 0, 0, 0) url("img/green.png") no-repeat scroll center center / 21px auto;
+            height: 22px;
+            width: 40px;
+        }
+        
+        #detailHeader {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .leftContent {
+            position: absolute;
+            float: left;
+        }
+        
+        .rightContent {
+            position: relative;
+            float: right;
+            margin: 0 5px 0 5px;
+        }
+        
+        .upper {
+            margin-top: 5px;
+            height: 28px;
+        }
+        
+        .lower {
+            height: 20px;
+        }
+        
+        .ui-table-columntoggle-btn {
+            display: none !important;
+        }
+        
+        .selection {
+            height: 22px;
+            width: 25px;
+        }
+        
+        .checkbox {
+            margin-top: 11px !important;
+        }
+        
+        #divPickup {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            display: none;
+        }
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        <div data-role="page" style="height:100%;">
+            <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+                <a href="list1.html" data-ajax='false' class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-chevron-left zmd-2x"></i></a>
+                <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pending</h1>
+                <a href="javascript:;" onclick="getDatas();" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay" style="font-size: 1.4em;"></i></a>
+            </div>
+            
+            <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
+                <div id="detailHeader">
+                    Dharmanandan Diamond - 5
+                </div>
+                <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
+                    <thead></thead>
+                    <tbody>
+                        <tr class="cell" lang="">
+                            <td class="emergencyIndicator"> </td>
+                            <td>
+                                <div class="upper">
+                                    <div class="leftContent">
+                                        GIA - 1234567890
+                                    </div>
+                                    <div class="rightContent">
+                                        Stock No. AD1256
+                                    </div>
+                                </div>
+                                <div class="lower">
+                                    <div class="leftContent">
+                                        0.50 K VVS1 EX EX EX SB
+                                    </div>
+                                    <div class="rightContent">
+                                        MAHESH
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <div id="divPickup">
+                    <a class="ui-btn ui-btn-raised clr-primary waves-effect waves-button waves-effect waves-button" id="btnPickup" href="javascript:;">Pickup Done</a>
+                </div>
+                <div id="divDetails">
+                </div>
+            </div>
+            
+        </div>
+        
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.mobile.min.js"></script>
+        <script src="vendor/waves/waves.min.js"></script>
+        <script src="js/nativedroid2.js"></script>
+        <script src="js/nd2settings.js"></script>
+        <script src="js/moment.js"></script>
+        <script src="js/common.js"></script>
+        
+        <script type="text/javascript">
+            $(document).bind("mobileinit", function () {
+                             $.mobile.ajaxLinksEnabled(false);
+                             });
+                             var CompanyName = "";
+                             var Datas = [];
+                             var ArrSelectedIndex = [];
+                             var Type = "";
+                             
+                             function getDatas() {
+                                 var isToCheckDone = (localStorage.getItem("TitleString")).indexOf("Done") !== -1;
+                                 
+                                 $.ajax({
+                                        type: 'GET',
+                                        url: baseUrl + 'getList2.php',
+                                        data: {
+                                        companyName: CompanyName,
+                                        isDone: isToCheckDone
+                                        },
+                                        beforeSend: function () {
+                                        $.mobile.loading('show');
+                                        },
+                                        complete: function () {
+                                        $.mobile.loading('hide');
+                                        },
+                                        success: function (data) {
+                                        if (data.isSucceed) {
+                                        Datas = data.Values;
+                                        buildTable();
+                                        }
+                                        },
+                                        error: function () {}
+                                        });
+                             }
+        
+        function doPickup(isAdd) {
+            var arrValue = [];
+            for (var i = ArrSelectedIndex.length; i--;) {
+                var transaction = Datas[ArrSelectedIndex[i]];
+                arrValue.push(transaction.id);
+            }
+            $.ajax({
+                   type: 'POST',
+                   url: baseUrl + 'doPickup.php',
+                   data: {
+                   companyName: CompanyName,
+                   values: JSON.stringify(arrValue),
+                   person: localStorage.getItem("Username"),
+                   flag: isAdd
+                   },
+                   beforeSend: function () {
+                   $.mobile.loading('show');
+                   },
+                   complete: function () {
+                   $.mobile.loading('hide');
+                   },
+                   success: function (data) {
+                   ArrSelectedIndex = [];
+                   buildTable();
+                   getDatas();
+                   $("#divPickup").css("display", "none");
+                   },
+                   error: function () {}
+                   });
+        }
+        
+        function doTask(index) {
+            localStorage.setItem("TransactionObj", JSON.stringify(Datas[index]));
+            window.location = "listDetail.html";
+        }
+        
+        
+        function chk(index) {
+            if (document.getElementById(index).checked) {
+                if (in_array(ArrSelectedIndex, index) == false)
+                ArrSelectedIndex.push(index);
+            } else {
+                if (in_array(ArrSelectedIndex, index) == true)
+                remove(ArrSelectedIndex, index);
+            }
+            if (ArrSelectedIndex.length > 0)
+            $("#divPickup").css("display", "block");
+            else
+            $("#divPickup").css("display", "none");
+        }
+        
+        function buildTable() {
+            $("#table-column-toggle > tbody").html("");
+            $("#detailHeader").html(CompanyName + " - " + Datas.length);
+            for (var i = 0; i < Datas.length; i++) {
+                var transaction = Datas[i];
+                var indicator = "emergencyIndicator";
+                
+                if (transaction.pickupType == "NORMAL") indicator = "defaultIndicator";
+                var checked = "";
+                if (in_array(ArrSelectedIndex, i)) checked = "checked";
+                
+                $("#table-column-toggle tbody").append('<tr class="cell">' +
+                                                       "<td class='selection'><input type='checkbox' class='checkbox' onclick='chk(" + i + ");' id='" + i + "' " + checked + "></td>" +
+                                                       '<td class="' + indicator + '"> </td>' +
+                                                       '<td onClick="doTask(' + i + ');">' +
+                                                       '<div class="upper">' +
+                                                       '<div class="leftContent">GIA - ' +
+                                                       transaction.GIA +
+                                                       '</div>' +
+                                                       '<div class="rightContent"> - ' +
+                                                       transaction.stockNumber +
+                                                       '</div>' +
+                                                       '</div>' +
+                                                       '<div class="lower">' +
+                                                       '<div class="leftContent">' +
+                                                       transaction.size + ' ' + transaction.color + ' ' + transaction.purity + ' ' + transaction.cut + ' ' + transaction.polish + ' ' + transaction.symmetry + ' ' + transaction.bill +
+                                                       '</div>' +
+                                                       '<div class="rightContent">' +
+                                                       transaction.purchaseBy +
+                                                       '</div>' +
+                                                       '</div>' +
+                                                       '</td>' +
+                                                       '</tr>').trigger("create");
+            }
+        }
+        
+        $(document).ready(function () {
+                          $("#divTitle").html(localStorage.getItem("TitleString"));
+                          CompanyName = getParameterByName("companyName");
+                          if (CompanyName != "") {
+                          localStorage.setItem("companyName", CompanyName);
+                          } else {
+                          CompanyName = localStorage.getItem("companyName");
+                          }
+                          Type = localStorage.getItem("type");
+                          if (Type == "COMPLETED")
+                          $("#btnPickup").html("Cancel Pickup");
+                          else
+                          $("#btnPickup").html("Pickup Done");
+                          
+                          $("#detailHeader").html(CompanyName);
+                          
+                          if (CompanyName != "") {
+                          getDatas();
+                          setInterval(getDatas, 30000);
+                          }
+                          
+                          $("#btnPickup").click(function () {
+                                                if (ArrSelectedIndex.length > 0) {
+                                                var msg = "";
+                                                var flag = false;
+                                                
+                                                if (Type == "COMPLETED") {
+                                                msg = "Are you sure you want to canel pickup?";
+                                                flag = false;
+                                                } else {
+                                                msg = "Are you sure you want to confirm pickup?";
+                                                flag = true;
+                                                }
+                                                
+                                                if (confirm(msg)) {
+                                                doPickup(flag);
+                                                }
+                                                }
+                                                });
+                          });
+            </script>
+        
+    </body>
+    
+</html>
