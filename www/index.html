@@ -43,8 +43,8 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-            app.initialize();
-            function deviceReady(){
+//            app.initialize();
+//            function deviceReady(){
               var Username = window.localStorage.getItem('Username')
 
               if (Username === null || Username.length === 0)
@@ -53,7 +53,7 @@
               }else{
                 location.href = 'landing.html';
               }
-            }
+//            }
         </script>
     </body>
 </html>
