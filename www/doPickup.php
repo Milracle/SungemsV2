@@ -12,7 +12,9 @@ $flag = $_POST["flag"];
     }
     foreach($values as $item) {
           $update = array(
-              'pickupBy' => $person
+              'pickupBy' => $person,
+              'modifiedDate' => getCurrentISTDate(),
+              'pickupDate' => getCurrentISTDate()
           );
           //Add the WHERE clauses
           $where_clause = array(

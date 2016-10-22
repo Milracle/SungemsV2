@@ -1,4 +1,5 @@
 var baseUrl = "http://sungems.appledelegate.com/";
+//var baseUrl = "http://localhost/sungems/www/";
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

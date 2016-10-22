@@ -6,7 +6,7 @@ $regCount = 0;
 $doneCount = 0;
 $isSucceed = true;
 
-  $query = "SELECT DISTINCT pickupType, COUNT(pickupType) as Count FROM `Transaction` WHERE pickupBy = '' GROUP BY pickupType";
+  $query = "SELECT DISTINCT pickupType, COUNT(pickupType) as Count FROM `Transaction` WHERE  isDeleted = false AND pickupBy = '' GROUP BY pickupType";
   $results = $database->get_results( $query );
 if($results){
   foreach( $results as $row )
@@ -18,7 +18,7 @@ if($results){
     $isSucceed = false;
 }
 
-  $query = "SELECT COUNT(id) as Count FROM `Transaction` WHERE pickupBy != ''";
+  $query = "SELECT COUNT(id) as Count FROM `Transaction` WHERE isDeleted = false AND pickupBy != ''";
     $results = $database->get_row( $query );
     if($results){
          $doneCount = $results[0];
@@ -26,5 +26,5 @@ if($results){
         $isSucceed = false;
     }
 
-sendResponse(200, json_encode(array('isSucceed' => $isSucceed, 'EmergencyCount' => $emCount, "RegularCount" => $regCount, "DoneCount" => $doneCount)));
+sendResponse(200, json_encode(array('isSucceed' => $isSucceed, 'EmergencyCount' => $emCount, "RegularCount" => $regCount, "DoneCount" => $doneCount, "SyncDate" => getCurrentISTDate())));
 ?>

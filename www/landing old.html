@@ -20,388 +20,403 @@
     under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
 
 
-		<link rel="stylesheet" href="css/font-awesome.min.css" />
-		<link rel="stylesheet" href="css/jquery.mobile.min.css" />
-		<link rel="stylesheet" href="vendor/waves/waves.min.css" />
-		<link rel="stylesheet" href="css/nativedroid2.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+    <link rel="stylesheet" href="vendor/waves/waves.min.css" />
+    <link rel="stylesheet" href="css/nativedroid2.css" />
 
-				<style>
-					/* Prevent FOUC */
-					body { opacity: 0; }
-
-          .inactive {
+    <style>
+        /* Prevent FOUC */
+        
+        body {
+            opacity: 0;
+        }
+        
+        .inactive {
             background-color: #1abc9c !important;
             color: rgba(255, 255, 255, 0.85) !important;
             border-color: white;
             border-style: solid;
-          }
-                
-                .interfer {
-                    background-color: #f1ab00 !important;
-                    color: rgba(255, 255, 255, 0.85) !important;
-                    border-color: white;
-                    border-style: solid;
-                }
-                
-                .oldInactive {
-                    background-color: #ff6666 !important;
-                    color: rgba(255, 255, 255, 0.85) !important;
-                    border-color: white;
-                    border-style: solid;
-                }
-                
-                .oldHeader {
-                    background-color: #ffffff !important;
-                    color: rgba(0, 0, 0, 0.85) !important;
-                    border-color: white;
-                    border-style: solid;
-                    font-weight: bold;
-                }
-
-
-          .active {
+        }
+        
+        .interfer {
+            background-color: #f1ab00 !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            border-color: white;
+            border-style: solid;
+        }
+        
+        .oldInactive {
+            background-color: #ff6666 !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            border-color: white;
+            border-style: solid;
+        }
+        
+        .oldHeader {
+            background-color: #ffffff !important;
+            color: rgba(0, 0, 0, 0.85) !important;
+            border-color: white;
+            border-style: solid;
+            font-weight: bold;
+        }
+        
+        .active {
             background-color: rgb(244, 67, 54) !important;
             color: rgba(255, 255, 255, 0.85) !important;
             border-color: white;
             border-style: solid;
-          }
-
-          p{
+        }
+        
+        p {
             font-size: 14px;
-          }
-				</style>
+        }
+    </style>
 
-    </head>
-    <body>
+</head>
 
-  <div data-role="page" >
+<body>
 
-    <nd2-include data-src="panel.left.html"></nd2-include>
+    <div data-role="page">
 
-    <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
-      <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
-      <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Today's buying</h1>
-      <a href="javascript:;" onclick="getData();" class="ui-btn-fab ui-btn-raised clr-warning ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay zmd-2x"></i></a>
-    </div>
+        <nd2-include data-src="panel.left.html"></nd2-include>
 
-    <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
+        <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+            <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
+            <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Today's buying</h1>
+            <a href="javascript:;" onclick="getData();" class="ui-btn-fab ui-btn-raised clr-warning ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay zmd-2x"></i></a>
+        </div>
 
-      <a href="newtransaction.html" class="ui-btn ui-btn-icon-left"><i class='zmdi zmdi-plus'></i> &nbsp; Add New Transaction</a>
-      <h4 id="currentDate"></h4>
-      <hr />
+        <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
 
-        <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
-              <thead>
-                <tr style="color:#607d8b;font-size:15px;">
-                  <th >Seller</th>
-                  <th >PC</th>
-                  <th >Wt</th>
-                  <th >Dis</th>
-                  <th >Type</th>
-                  <th >PBy</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
+            <a href="newtransaction.html" class="ui-btn ui-btn-icon-left"><i class='zmdi zmdi-plus'></i> &nbsp; Add New Transaction</a>
+            <h4 id="currentDate"></h4>
+            <hr />
+
+            <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
+                <thead>
+                    <tr style="color:#607d8b;font-size:15px;">
+                        <th>Seller</th>
+                        <th>PC</th>
+                        <th>Wt</th>
+                        <th>Dis</th>
+                        <th>Type</th>
+                        <th>PBy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
             </table>
             <div id="divDetails">
+            </div>
         </div>
+
     </div>
 
-  </div>
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
-  <script src="js/jquery.mobile.min.js"></script>
-  <script src="vendor/waves/waves.min.js"></script>
-  <script src="js/nativedroid2.js"></script>
-  <script src="js/nd2settings.js"></script>
-  <script src="js/moment.js"></script>
-  <script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
-  <script type="text/javascript">
-  $(document).bind("mobileinit", function(){
-$.mobile.ajaxLinksEnabled(false);
-});
-var isOldChecked = false;
-var selectedRow;
-var isHeaderPrinted = false;
-
-    $(document).ready(function(){
-      var oldData;
-                      
-      Parse.initialize("c83fcAyGNd5F8vSdmI1aAgAhX2INlnTCL3ADZkZW", "ehe4YbTg5VH82sun0MkTCO6ZYmmghr4kEK5vrw72");
-
-      $("a").attr("data-ajax", "false");
-      $("a").attr("rel", "external");
-
-      var a = $("form");
-      if (a != null) {
-          $("form").first().attr("data-ajax", "false");
-          $("form").first().attr("rel", "external");
-      }
-      getData();
-
-      $('table').on('click', '.header', function() {
-        var recId = $(this).attr("lang");
-                    
-        $('.collapse').not(this).each(function(){
-          if($(this).attr("id") != recId){
-            $(this).css("display","none");
-          }else{
-            $("#"+recId).slideToggle(0);
-              if( $(this).css('display') == 'table-row') {
-                  selectedRow = recId;
-              }else{
-                  selectedRow = "";
-              }
-          }
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.mobile.min.js"></script>
+    <script src="vendor/waves/waves.min.js"></script>
+    <script src="js/nativedroid2.js"></script>
+    <script src="js/nd2settings.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="https://www.parsecdn.com/js/parse-1.6.14.min.js"></script>
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function () {
+            $.mobile.ajaxLinksEnabled(false);
         });
-      });
-      $(".ui-table-columntoggle-btn").remove();
-      setInterval(getData, 10000);
-    });
-    
-    function restoreToggle(){
-        $('.collapse').each(function(){
-              if($(this).attr("id") != selectedRow){
-                  $(this).css("display","none");
-                }else{
-                  $("#"+selectedRow).css("display","block");
-                }
-        });
-    }
+        var isOldChecked = false;
+        var selectedRow;
+        var isHeaderPrinted = false;
 
-    function getParameterByName(name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-          results = regex.exec(location.search);
-      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+        $(document).ready(function () {
+            var oldData;
 
-    function logout(){
-        $.mobile.changePage("login.html?ur=ss", null, true, true);
-    }
+            Parse.initialize("c83fcAyGNd5F8vSdmI1aAgAhX2INlnTCL3ADZkZW", "ehe4YbTg5VH82sun0MkTCO6ZYmmghr4kEK5vrw72");
 
-    function getData(){
-      var days = getParameterByName("days");
+            $("a").attr("data-ajax", "false");
+            $("a").attr("rel", "external");
 
-      var d = new Date();
-      var start = new moment(d);
-      start.startOf('day');
-      var finish = new moment(start);
-      finish.add(1, 'day');
+            var a = $("form");
+            if (a != null) {
+                $("form").first().attr("data-ajax", "false");
+                $("form").first().attr("rel", "external");
+            }
+            getData();
 
-      if(days != ""){
-        var int = parseInt(days);
-        start.subtract(int, 'day');
-        finish = new moment(start);
-        finish.add(1, 'day');
-        $("#divTitle").html(start.format("DD/MM/YYYY"));
-      }
+            $('table').on('click', '.header', function () {
+                var recId = $(this).attr("lang");
 
-      $("#currentDate").html(start.format("DD/MM/YYYY"));
-      $.mobile.loading( 'show', { text: '', textVisible: false, theme: 'b', textonly: false, html: '' });
-      var query = new Parse.Query("Buying")
-      query.greaterThanOrEqualTo("createdAt", start.toDate());
-      query.lessThan("createdAt", finish.toDate());
-      query.ascending("pickupby");
-      query.find({
-        success: function(results) {
-          $.mobile.loading('hide');
-          $("#table-column-toggle > tbody").html("");
-          for (var i = 0; i < results.length; i++) {
-            var object = results[i];
-            buildData(object);
-          }
-                 
-             if(isOldChecked == false && days == ""){
-                 getYetToPickData();
-             }else{
-                 isHeaderPrinted = false;
-                 for (var i = 0; i < oldData.length; i++) {
-                     var object = oldData[i];
-                     buildData(object, true);
-                 }
-             }
-             restoreToggle();
-        },
-        error: function(error) {
-          alert("Error loading data. Please try again later.");
-          $.mobile.loading('hide');
-        }
-      });
-    }
-                            
-    function getYetToPickData(){
-        $.mobile.loading( 'show', { text: '', textVisible: false, theme: 'b', textonly: false, html: '' });
-        var query = new Parse.Query("Buying");
-        var start = "";
-        var finish = "";
-        /*
-        var localDate = new Date();
-        var localMoment = moment();
-        //var utcMoment = moment.utc();
-        //var utcDate =
-        var today = moment.utc();
-        var today2 = moment.utc(); */
-        start = moment().subtract(2,'days').startOf('day');
-        finish = moment().startOf('day');
-                            
-        //start = today.subtract(3, 'day');
-        //finish = today2.subtract(1, 'day');
-        query.greaterThanOrEqualTo("createdAt", start.toDate());
-        query.lessThan("createdAt", finish.toDate());
-        query.doesNotExist("pickupby");
-        query.descending("createdAt");
-        query.find({
-                   success: function(results) {
-                   oldData = results;
-                   isOldChecked = true;
-                   $.mobile.loading('hide');
-                   for (var i = 0; i < results.length; i++) {
-                       var object = results[i];
-                        buildData(object, true);
-                       }
-                   },
-                   error: function(error) {
-                       alert("Error loading data. Please try again later.");
-                       $.mobile.loading('hide');
-                   }
+                $('.collapse').not(this).each(function () {
+                    if ($(this).attr("id") != recId) {
+                        $(this).css("display", "none");
+                    } else {
+                        $("#" + recId).slideToggle(0);
+                        if ($(this).css('display') == 'table-row') {
+                            selectedRow = recId;
+                        } else {
+                            selectedRow = "";
+                        }
+                    }
                 });
-    }
-
-
-    function confirmPickup(objectId){
-        var buyingCls = Parse.Object.extend("Buying");
-        var query = new Parse.Query(buyingCls);
-        query.get(objectId, {
-          success: function(buyingObj) {
-            buyingObj.set("pickupby",localStorage.getItem("Username"));
-            buyingObj.save();
-            getData();
-            // The object was retrieved successfully.
-          },
-          error: function(object, error) {
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
-          }
+            });
+            $(".ui-table-columntoggle-btn").remove();
+            setInterval(getData, 10000);
         });
-    }
-                            
-    function doInterfer(objectId){
-    var buyingCls = Parse.Object.extend("Buying");
-    var query = new Parse.Query(buyingCls);
-    query.get(objectId, {
-              success: function(buyingObj) {
-              buyingObj.set("interfereCall",localStorage.getItem("Username"));
-              buyingObj.save();
-              getData();
-              // The object was retrieved successfully.
-              },
-              error: function(object, error) {
-              // The object was not retrieved successfully.
-              // error is a Parse.Error with an error code and message.
-              }
-              });
-    }
-    
-    function cancelInterfer(objectId){
-    var buyingCls = Parse.Object.extend("Buying");
-    var query = new Parse.Query(buyingCls);
-    query.get(objectId, {
-              success: function(buyingObj) {
-              buyingObj.set("interfereCall","");
-              buyingObj.save();
-              getData();
-              // The object was retrieved successfully.
-              },
-              error: function(object, error) {
-              // The object was not retrieved successfully.
-              // error is a Parse.Error with an error code and message.
-              }
-              });
-    }
-                            
-    function cancelPickup(objectId){
-        var buyingCls = Parse.Object.extend("Buying");
-        var query = new Parse.Query(buyingCls);
-        query.get(objectId, {
-          success: function(buyingObj) {
-            buyingObj.set("pickupby","");
-            buyingObj.save();
-            getData();
-            // The object was retrieved successfully.
-          },
-          error: function(object, error) {
-          // The object was not retrieved successfully.
-          // error is a Parse.Error with an error code and message.
-          }
-      });
-    }
-                        
-    function deleteEntry(objectId){
-        var buyingCls = Parse.Object.extend("Buying");
-        var query = new Parse.Query(buyingCls);
-        query.get(objectId, {
-          success: function(buyingObj) {
-                  buyingObj.destroy({
-                       success: function(myObject) {
-                        getData();
-                       },
-                       error: function(myObject, error) {
-                            alert("Delete failed. Please try again later");
-                       }
-                  });
-              },
-              error: function(object, error) {
-                  alert("Delete failed. Please try again later");
-              }
-          });
-    }
-                            
-    function editEntry(objectId){
-        location.href = 'newtransaction.html?objectId=' + objectId;
-    }
 
-    function editVal(column, objectId){
-        var buyingCls = Parse.Object.extend("Buying");
-        var query = new Parse.Query(buyingCls);
-        query.get(objectId, {
-          success: function(buyingObj) {
-              buyingObj.set("pickupby","");
-              buyingObj.save();
-              getData();
-              // The object was retrieved successfully.
-          },
-          error: function(object, error) {
-          }
-          });
-    }
-
-    function buildDataManual(object){
-      var isPicked = false;
-      var activeClass = "active";
-      var strPickedup = "<p>" +
-      "<a class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='confirmPickup(\"" + object.id + "\");' href='javascript:;'>" +
-      "<i class='zmdi zmdi-delete'></i> &nbsp;" +
-      "Confirm Pickup by " + localStorage.getItem("Username") +
-      "</a>" +
-      "</p>";
-      if(object.get('pickupby') != "" && object.get('pickupby') !== undefined){
-            isPicked = true;
-            activeClass = "inactive";
-            strPickedup = "<p>Pickeup By: " + object.get('pickupby') + "</p>";
+        function restoreToggle() {
+            $('.collapse').each(function () {
+                if ($(this).attr("id") != selectedRow) {
+                    $(this).css("display", "none");
+                } else {
+                    $("#" + selectedRow).css("display", "block");
+                }
+            });
         }
-      $("#divDetails").append("<div class='ui-collapsible ui-collapsible-themed-content ui-collapsible-collapsed' data-role='collapsible' data-inset='false'>" +
-            "<h4 class='" + activeClass + "'>" + object.get('seller') + " : " +  object.get('quantity') + " pic</h4>" +
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        function logout() {
+            $.mobile.changePage("login.html?ur=ss", null, true, true);
+        }
+
+        function getData() {
+            var days = getParameterByName("days");
+
+            var d = new Date();
+            var start = new moment(d);
+            start.startOf('day');
+            var finish = new moment(start);
+            finish.add(1, 'day');
+
+            if (days != "") {
+                var int = parseInt(days);
+                start.subtract(int, 'day');
+                finish = new moment(start);
+                finish.add(1, 'day');
+                $("#divTitle").html(start.format("DD/MM/YYYY"));
+            }
+
+            $("#currentDate").html(start.format("DD/MM/YYYY"));
+            $.mobile.loading('show', {
+                text: '',
+                textVisible: false,
+                theme: 'b',
+                textonly: false,
+                html: ''
+            });
+            var query = new Parse.Query("Buying")
+            query.greaterThanOrEqualTo("createdAt", start.toDate());
+            query.lessThan("createdAt", finish.toDate());
+            query.ascending("pickupby");
+            query.find({
+                success: function (results) {
+                    $.mobile.loading('hide');
+                    $("#table-column-toggle > tbody").html("");
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        buildData(object);
+                    }
+
+                    if (isOldChecked == false && days == "") {
+                        getYetToPickData();
+                    } else {
+                        isHeaderPrinted = false;
+                        for (var i = 0; i < oldData.length; i++) {
+                            var object = oldData[i];
+                            buildData(object, true);
+                        }
+                    }
+                    restoreToggle();
+                },
+                error: function (error) {
+                    alert("Error loading data. Please try again later.");
+                    $.mobile.loading('hide');
+                }
+            });
+        }
+
+        function getYetToPickData() {
+            $.mobile.loading('show', {
+                text: '',
+                textVisible: false,
+                theme: 'b',
+                textonly: false,
+                html: ''
+            });
+            var query = new Parse.Query("Buying");
+            var start = "";
+            var finish = "";
+            /*
+            var localDate = new Date();
+            var localMoment = moment();
+            //var utcMoment = moment.utc();
+            //var utcDate =
+            var today = moment.utc();
+            var today2 = moment.utc(); */
+            start = moment().subtract(2, 'days').startOf('day');
+            finish = moment().startOf('day');
+
+            //start = today.subtract(3, 'day');
+            //finish = today2.subtract(1, 'day');
+            query.greaterThanOrEqualTo("createdAt", start.toDate());
+            query.lessThan("createdAt", finish.toDate());
+            query.doesNotExist("pickupby");
+            query.descending("createdAt");
+            query.find({
+                success: function (results) {
+                    oldData = results;
+                    isOldChecked = true;
+                    $.mobile.loading('hide');
+                    for (var i = 0; i < results.length; i++) {
+                        var object = results[i];
+                        buildData(object, true);
+                    }
+                },
+                error: function (error) {
+                    alert("Error loading data. Please try again later.");
+                    $.mobile.loading('hide');
+                }
+            });
+        }
+
+
+        function confirmPickup(objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.set("pickupby", localStorage.getItem("Username"));
+                    buyingObj.save();
+                    getData();
+                    // The object was retrieved successfully.
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        }
+
+        function doInterfer(objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.set("interfereCall", localStorage.getItem("Username"));
+                    buyingObj.save();
+                    getData();
+                    // The object was retrieved successfully.
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        }
+
+        function cancelInterfer(objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.set("interfereCall", "");
+                    buyingObj.save();
+                    getData();
+                    // The object was retrieved successfully.
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        }
+
+        function cancelPickup(objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.set("pickupby", "");
+                    buyingObj.save();
+                    getData();
+                    // The object was retrieved successfully.
+                },
+                error: function (object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        }
+
+        function deleteEntry(objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.destroy({
+                        success: function (myObject) {
+                            getData();
+                        },
+                        error: function (myObject, error) {
+                            alert("Delete failed. Please try again later");
+                        }
+                    });
+                },
+                error: function (object, error) {
+                    alert("Delete failed. Please try again later");
+                }
+            });
+        }
+
+        function editEntry(objectId) {
+            location.href = 'newtransaction.html?objectId=' + objectId;
+        }
+
+        function editVal(column, objectId) {
+            var buyingCls = Parse.Object.extend("Buying");
+            var query = new Parse.Query(buyingCls);
+            query.get(objectId, {
+                success: function (buyingObj) {
+                    buyingObj.set("pickupby", "");
+                    buyingObj.save();
+                    getData();
+                    // The object was retrieved successfully.
+                },
+                error: function (object, error) {}
+            });
+        }
+
+        function buildDataManual(object) {
+            var isPicked = false;
+            var activeClass = "active";
+            var strPickedup = "<p>" +
+                "<a class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='confirmPickup(\"" + object.id + "\");' href='javascript:;'>" +
+                "<i class='zmdi zmdi-delete'></i> &nbsp;" +
+                "Confirm Pickup by " + localStorage.getItem("Username") +
+                "</a>" +
+                "</p>";
+            if (object.get('pickupby') != "" && object.get('pickupby') !== undefined) {
+                isPicked = true;
+                activeClass = "inactive";
+                strPickedup = "<p>Pickeup By: " + object.get('pickupby') + "</p>";
+            }
+            $("#divDetails").append("<div class='ui-collapsible ui-collapsible-themed-content ui-collapsible-collapsed' data-role='collapsible' data-inset='false'>" +
+                "<h4 class='" + activeClass + "'>" + object.get('seller') + " : " + object.get('quantity') + " pic</h4>" +
                 "<p>Buyer: " + object.get('buyer') + "</p>" +
                 "<p>Seller: " + object.get('seller') + "</p>" +
                 "<p>Quantity: " + object.get('quantity') + "</p>" +
@@ -414,102 +429,103 @@ var isHeaderPrinted = false;
                 // "</select>" +
                 // "</p>" +
                 strPickedup +
-        "</div>" +
-      "</div>").trigger("create");
-    }
-
-    function buildData(object,isOld){
-      var activeClass = "active";
-      var isPicked = false;
-      var interferer = "";
-
-      var strPickedup = "<p>" +
-      "<a style='border: 1px solid;color: #00703c;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='confirmPickup(\"" + object.id + "\");' href='javascript:;'>" +
-      "<i class='zmdi zmdi-folder-outline'></i> &nbsp;" +
-      "Confirm Pickup" +
-      "</a>" +
-      "</p>";
-
-      if(object.get('interferer') != "" && object.get('interferer') !== undefined){
-        interferer = "<p>Interferer: " + object.get('interferer') + "</p>";
-      }
-
-      if(object.get('pickupby') != "" && object.get('pickupby') !== undefined){
-        isPicked = true;
-        activeClass = "inactive";
-        strPickedup = "<p>Pickeup By: " + object.get('pickupby') + "</p>";
-        strPickedup += "<p>" +
-        "<a style='border: 1px solid;color: #F5740F;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='cancelPickup(\"" + object.id + "\");' href='javascript:;'>" +
-        "- Cancel Pickup" +
-        "</a>" +
-        "</p>";
-      }
-                            
-        if(object.get('interfereCall') != "" && object.get('interfereCall') !== undefined){
-                strPickedup += "<p>" +
-                "<a style='border: 1px solid;color:  #33659A;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='cancelInterfer(\"" + object.id + "\");' href='javascript:;'>" +
-                "<i class='zmdi zmdi-minus zmdi-hc-fw'></i> &nbsp;" +
-                "Cancel Interfer" +
-                "</a>" +
-                "</p>";
-        }else{
-                strPickedup += "<p>" +
-                "<a style='border: 1px solid;color:  #33659A;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='doInterfer(\"" + object.id + "\");' href='javascript:;'>" +
-                "<i class='zmdi zmdi-check zmdi-hc-fw'></i> &nbsp;" +
-                "Interfer" +
-                "</a>" +
-                "</p>";
+                "</div>" +
+                "</div>").trigger("create");
         }
-                            
-        strPickedup += "<p>" +
-        "<a style='border: 1px solid;color:  #FB0000;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='deleteEntry(\"" + object.id + "\");' href='javascript:;'>" +
-        "<i class='zmdi zmdi-delete'></i> &nbsp;" +
-        "Delete Entry" +
-        "</a>" +
-        "</p>";
-                            
-        strPickedup += "<p>" +
-        "<a style='border: 1px solid;color:  #ecab5f;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='editEntry(\"" + object.id + "\");' href='javascript:;'>" +
-        "<i class='zmdi zmdi-edit'></i> &nbsp;" +
-        "Edit Entry" +
-        "</a>" +
-        "</p>";
 
-        if(isOld == true){
-            activeClass = "oldInactive";
-            if(!isHeaderPrinted){
-                isHeaderPrinted = true;
-                $("#table-column-toggle tbody").append("<tr class='oldHeader'><td colspan='6'>Yesterday</td></tr>");
+        function buildData(object, isOld) {
+            var activeClass = "active";
+            var isPicked = false;
+            var interferer = "";
+
+            var strPickedup = "<p>" +
+                "<a style='border: 1px solid;color: #00703c;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='confirmPickup(\"" + object.id + "\");' href='javascript:;'>" +
+                "<i class='zmdi zmdi-folder-outline'></i> &nbsp;" +
+                "Confirm Pickup" +
+                "</a>" +
+                "</p>";
+
+            if (object.get('interferer') != "" && object.get('interferer') !== undefined) {
+                interferer = "<p>Interferer: " + object.get('interferer') + "</p>";
             }
+
+            if (object.get('pickupby') != "" && object.get('pickupby') !== undefined) {
+                isPicked = true;
+                activeClass = "inactive";
+                strPickedup = "<p>Pickeup By: " + object.get('pickupby') + "</p>";
+                strPickedup += "<p>" +
+                    "<a style='border: 1px solid;color: #F5740F;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='cancelPickup(\"" + object.id + "\");' href='javascript:;'>" +
+                    "- Cancel Pickup" +
+                    "</a>" +
+                    "</p>";
+            }
+
+            if (object.get('interfereCall') != "" && object.get('interfereCall') !== undefined) {
+                strPickedup += "<p>" +
+                    "<a style='border: 1px solid;color:  #33659A;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='cancelInterfer(\"" + object.id + "\");' href='javascript:;'>" +
+                    "<i class='zmdi zmdi-minus zmdi-hc-fw'></i> &nbsp;" +
+                    "Cancel Interfer" +
+                    "</a>" +
+                    "</p>";
+            } else {
+                strPickedup += "<p>" +
+                    "<a style='border: 1px solid;color:  #33659A;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='doInterfer(\"" + object.id + "\");' href='javascript:;'>" +
+                    "<i class='zmdi zmdi-check zmdi-hc-fw'></i> &nbsp;" +
+                    "Interfer" +
+                    "</a>" +
+                    "</p>";
+            }
+
+            strPickedup += "<p>" +
+                "<a style='border: 1px solid;color:  #FB0000;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='deleteEntry(\"" + object.id + "\");' href='javascript:;'>" +
+                "<i class='zmdi zmdi-delete'></i> &nbsp;" +
+                "Delete Entry" +
+                "</a>" +
+                "</p>";
+
+            strPickedup += "<p>" +
+                "<a style='border: 1px solid;color:  #ecab5f;' class='ui-btn ui-btn-inline waves-effect clr-primary waves-button waves-effect waves-button' onclick='editEntry(\"" + object.id + "\");' href='javascript:;'>" +
+                "<i class='zmdi zmdi-edit'></i> &nbsp;" +
+                "Edit Entry" +
+                "</a>" +
+                "</p>";
+
+            if (isOld == true) {
+                activeClass = "oldInactive";
+                if (!isHeaderPrinted) {
+                    isHeaderPrinted = true;
+                    $("#table-column-toggle tbody").append("<tr class='oldHeader'><td colspan='6'>Yesterday</td></tr>");
+                }
+            }
+            var interferName = "";
+
+            if ((object.get('pickupby') == "" || object.get('pickupby') === undefined) && object.get('interfereCall') != "" && object.get('interfereCall') !== undefined) {
+                activeClass = "interfer";
+                interferName = " (IF - " + object.get('interfereCall') + ")";
+            }
+
+            $("#table-column-toggle tbody").append("<tr class='" + activeClass + " header' lang='" + object.id + "'>" +
+                "<td>" + object.get('seller') + " (" + object.get('buyer') + ")" + interferName + "</td>" +
+                "<td>" + object.get('quantity') + "</td>" +
+                "<td>" + object.get('weight') + "</td>" +
+                "<td>" + (object.get('discount') === undefined ? "" : object.get('discount')) + "</td>" +
+                "<td>" + (object.get('discountType') === undefined ? "" : object.get('discountType')) + "</td>" +
+                "<td>" + (object.get('pickupby') === undefined ? "" : object.get('pickupby')) + "</td></tr>" +
+                "<tr id='" + object.id + "' class='collapse' style='display:none;'><td colspan='5'><div>" +
+                "<p>Buyer: " + object.get('buyer') + "</p>" +
+                "<p>Seller: " + object.get('seller') + "</a></p>" +
+                //<a href='javascript:;' onclick='editVal(\"seller\", \"" + object.id + "\")'
+                "<p>Quantity: " + object.get('quantity') + "</p>" +
+                "<p>Weight: " + object.get('weight') + "</p>" +
+                "<p>Discount: " + object.get('discount') + "</p>" +
+                "<p>DiscountType: " + object.get('discountType') + "</p>" +
+                "<p>Bill: " + object.get('bill') + "</p>" +
+                "<p>Note: " + (object.get('note') === undefined ? "" : object.get('note')) + "</p>" +
+                interferer +
+                strPickedup +
+                "</div></tr>").trigger("create");
         }
-        var interferName = "";
-                            
-        if((object.get('pickupby') == "" || object.get('pickupby') === undefined) && object.get('interfereCall') != "" && object.get('interfereCall') !== undefined){
-            activeClass  = "interfer";
-            interferName = " (IF - " + object.get('interfereCall') + ")";
-        }
-                            
-      $("#table-column-toggle tbody").append("<tr class='" + activeClass + " header' lang='" + object.id + "'>" +
-     "<td>" + object.get('seller') + " ("+ object.get('buyer') + ")" + interferName + "</td>" +
-      "<td>"+ object.get('quantity') +"</td>" +
-    "<td>"+ object.get('weight') +"</td>" +
-"<td>"+ (object.get('discount') === undefined ? "":object.get('discount')) +"</td>" +
-"<td>"+ (object.get('discountType') === undefined ? "":object.get('discountType')) +"</td>" +
-"<td>"+ (object.get('pickupby') === undefined ? "":object.get('pickupby')) +"</td></tr>" +
-"<tr id='" + object.id + "' class='collapse' style='display:none;'><td colspan='5'><div>" +
-"<p>Buyer: " + object.get('buyer') + "</p>" +
-"<p>Seller: " + object.get('seller') + "</a></p>" +
-//<a href='javascript:;' onclick='editVal(\"seller\", \"" + object.id + "\")'
-"<p>Quantity: " + object.get('quantity') + "</p>" +
-"<p>Weight: "+ object.get('weight') +"</p>" +
-"<p>Discount: "+ object.get('discount') +"</p>" +
-"<p>DiscountType: "+ object.get('discountType') +"</p>" +
-"<p>Bill: "+ object.get('bill') +"</p>" +
-"<p>Note: "+ (object.get('note') === undefined ? "":object.get('note'))  +"</p>" +
-interferer +
-strPickedup +
-"</div></tr>").trigger("create");
-    }
-  </script>
-    </body>
+    </script>
+</body>
+
 </html>

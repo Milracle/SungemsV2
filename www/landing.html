@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
-    
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
-        
-        
-        <link rel="stylesheet" href="css/jquery.mobile.min.css" />
-        <link rel="stylesheet" href="css/nativedroid2.css" />
-        
-        <style>
-            .card {
-                color: white;
-                background-color: dimgrey;
-                text-align: center;
-                margin: 3px !important;
-                height: 27%;
-                padding: 2px;
-            }
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https:https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1, user-scalable=no' />
+
+
+    <link rel="stylesheet" href="css/jquery.mobile.min.css" />
+    <link rel="stylesheet" href="css/nativedroid2.css" />
+
+    <style>
+        .card {
+            color: white;
+            background-color: dimgrey;
+            text-align: center;
+            margin: 3px !important;
+            height: 28.6%;
+            padding: 2px;
+        }
         
         a {
             text-decoration: none;
@@ -30,96 +30,96 @@
             display: none !important;
         }
         
-        .container{
+        .container {
             position: absolute;
-            top: 86px;
+            top: 66px;
             height: 100%;
             width: 100%;
             overflow-y: hidden;
         }
         
-        p{
+        p {
             font-size: 20px !important;
         }
-        </style>
-        
-    </head>
-    
-    <body>
-        
-        <div data-role="page" style="height:100% !important;min-height:100% !important;">
-            
-            <nd2-include data-src="panel.left.html"></nd2-include>
-            
-            <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
-                <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
-                <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pickup</h1>
-                <a href="javascript:;" onclick="getStats();" class="ui-btn-fab ui-btn-raised clr-warning ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay zmd-2x"></i></a>
+    </style>
+
+</head>
+
+<body>
+
+    <div data-role="page" style="height:100% !important;min-height:100% !important;">
+
+        <nd2-include data-src="panel.left.html"></nd2-include>
+
+        <div data-role="header" data-position="fixed" class="wow fadeIn">
+            <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
+            <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pickup</h1>
+            <a href="javascript:;" onclick="getStats();" class="ui-btn-fab ui-btn-raised clr-warning ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay zmd-2x"></i></a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <a href="list1.html?type=EMERGENCY" data-ajax='false'>
+            <div class="card-supporting-text card">
+                <p>Emergency Pickup Pending</p>
+                <p id="EmergencyCount">0</p>
             </div>
-        </div>
-        
-        
-        <div class="container">
-            <a href="list1.html?type=EMERGENCY" data-ajax='false'>
-                <div class="card-supporting-text card">
-                    <p>Emergency Pickup Pending</p>
-                    <p id="EmergencyCount">0</p>
-                </div>
-            </a>
-            <a href="list1.html?type=NORMAL" data-ajax='false'>
-                
-                <div class="card-supporting-text card">
-                    <p>General Pickup Pending</p>
-                    <p id="RegularCount">0</p>
-                </div>
-            </a>
-            <a href="list1.html?type=COMPLETED" data-ajax='false'>
-                
-                <div class="card-supporting-text card">
-                    <p>Pickup Done</p>
-                    <p id="DoneCount">0</p>
-                </div>
-            </a>
-        </div>
-        
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/jquery.mobile.min.js"></script>
-        <script src="vendor/waves/waves.min.js"></script>
-        <script src="js/nativedroid2.js"></script>
-        <script src="js/nd2settings.js"></script>
-        <script src="js/moment.js"></script>
-        <script src="js/common.js"></script>
-        <script type="text/javascript">
-            $(document).bind("mobileinit", function () {
-                             $.mobile.ajaxLinksEnabled(false);
-                             });
-                             
-                             function getStats() {
-                                 $.ajax({
-                                        type: 'GET',
-                                        url: baseUrl + 'getStats.php',
-                                        data: {},
-                                        beforeSend: function () {
-                                        $.mobile.loading('show');
-                                        },
-                                        complete: function () {
-                                        $.mobile.loading('hide');
-                                        },
-                                        success: function (data) {
-                                        $("#EmergencyCount").html(data.EmergencyCount);
-                                        $("#DoneCount").html(data.DoneCount);
-                                        $("#RegularCount").html(data.RegularCount);
-                                        },
-                                        error: function () {}
-                                        });
-                             }
-        
+        </a>
+        <a href="list1.html?type=NORMAL" data-ajax='false'>
+
+            <div class="card-supporting-text card">
+                <p>General Pickup Pending</p>
+                <p id="RegularCount">0</p>
+            </div>
+        </a>
+        <a href="list1.html?type=COMPLETED" data-ajax='false'>
+
+            <div class="card-supporting-text card">
+                <p>Pickup Done</p>
+                <p id="DoneCount">0</p>
+            </div>
+        </a>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.mobile.min.js"></script>
+    <script src="vendor/waves/waves.min.js"></script>
+    <script src="js/nativedroid2.js"></script>
+    <script src="js/nd2settings.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript">
+        $(document).bind("mobileinit", function () {
+            $.mobile.ajaxLinksEnabled(false);
+        });
+
+        function getStats() {
+            $.ajax({
+                type: 'GET',
+                url: baseUrl + 'getStats.php',
+                data: {},
+                beforeSend: function () {
+                    $.mobile.loading('show');
+                },
+                complete: function () {
+                    $.mobile.loading('hide');
+                },
+                success: function (data) {
+                    $("#EmergencyCount").html(data.EmergencyCount);
+                    $("#DoneCount").html(data.DoneCount);
+                    $("#RegularCount").html(data.RegularCount);
+                },
+                error: function () {}
+            });
+        }
+
         $(document).ready(function () {
-                          getStats();
-                          setInterval(getStats, 30000);
-                          });
-            </script>
-    </body>
-    
+            getStats();
+            setInterval(getStats, 30000);
+        });
+    </script>
+</body>
+
 </html>

@@ -8,7 +8,8 @@ $totalPayment = $_POST["totalPayment"];
 
     $update = array(
               'bankRate' => $bankRate,
-              'totalPayment' => $totalPayment
+              'totalPayment' => $totalPayment,
+              'modifiedDate' => getCurrentISTDate()
           );
           //Add the WHERE clauses
           $where_clause = array(

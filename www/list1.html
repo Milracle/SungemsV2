@@ -66,22 +66,23 @@
             bottom: 0px;
         }
         
-        .interfereCell{
+        .interfereCell {
             background-color: darkorange;
             color: white;
             padding-top: 1.5em !important;
         }
+        
         #btnRemoveInterfere {
             left: 50%;
             margin: 0 0 0 2px;
             background-color: darkorange;
         }
         
-        tr{
+        tr {
             height: 65px;
         }
         
-        .Name{
+        .Name {
             font-size: 16px;
             padding-top: 1.3em !important;
         }
@@ -92,13 +93,13 @@
     <body>
         
         <div data-role="page" style="height:100%;">
-            <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
+            <div data-role="header" data-position="fixed" class="wow fadeIn">
                 <a href="landing.html" data-ajax='false' class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-chevron-left zmd-2x"></i></a>
                 <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pending</h1>
                 <a href="javascript:;" onclick="getDatas();" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay" style="font-size: 1.4em;"></i></a>
             </div>
             
-            <div role="main" class="ui-content wow fadeIn" data-wow-delay="0.2s" data-inset="false">
+            <div role="main" class="ui-content wow fadeIn" style="padding:2px 0 !important;" data-wow-delay="0.2s" data-inset="false">
                 
                 <table data-role="table" id="table-column-toggle" style="font-size: 13px;" data-mode="columntoggle" class="ui-responsive table table-hover table-stroke">
                     <thead></thead>
@@ -143,13 +144,16 @@
                              var Company = [];
                              var Interferer = [];
                              var ArrSelectedIndex = [];
+                             var SyncDate = "";
+                             var Data = "";
                              
                              function getDatas() {
                                  $.ajax({
-                                        type: 'GET',
+                                        type: 'POST',
                                         url: baseUrl + 'getList1.php',
                                         data: {
-                                        type: Type
+                                        type: Type,
+                                        SyncDate: SyncDate
                                         },
                                         beforeSend: function () {
                                         $.mobile.loading('show');
@@ -159,14 +163,21 @@
                                         },
                                         success: function (data) {
                                         if (data.isSucceed) {
-                                        Company = data.Company;
-                                        Interferer = data.Interferer;
-                                        buildTable();
+                                        Data = data;
+                                        localStorage.setItem("list1Data",JSON.stringify(Data));
+                                        fillData();
                                         }
                                         },
                                         error: function () {}
                                         });
                              }
+        
+        function fillData(){
+            Company = Data.Company;
+            Interferer = Data.Interferer;
+            SyncDate = Data.SyncDate;
+            buildTable();
+        }
         
         function doInterfere(isAdd) {
             var arrValue = [];
@@ -189,9 +200,16 @@
                    $.mobile.loading('hide');
                    },
                    success: function (data) {
+                   for (var i = ArrSelectedIndex.length; i--;) {
+                   if(isAdd)
+                   Interferer[ArrSelectedIndex[i]] = localStorage.getItem("Username");
+                   else
+                   Interferer[ArrSelectedIndex[i]] = "";
+                   }
+                   
                    ArrSelectedIndex = [];
                    buildTable();
-                   getDatas();
+                   //getDatas();
                    $("#divInterfer").css("display", "none");
                    },
                    error: function () {}
@@ -256,7 +274,7 @@
                     checkboxStr = "<td class='selection'><input type='checkbox' class='checkbox' onclick='chk(" + i + ");' id='" + i + "' " + checked + "></td>";
                 }
                 var cls = "";
-                if(Interferer[i] != "")
+                if (Interferer[i] != "")
                 cls = "interfereCell";
                 
                 $("#table-column-toggle tbody").append("<tr class='inactive'>" +
@@ -273,11 +291,17 @@
                           } else {
                           Type = localStorage.getItem("type");
                           }
-                          $("#divTitle").html(localStorage.getItem("TitleString"));
                           if (Type != "") {
                           if (Type == "EMERGENCY") localStorage.setItem("TitleString", "Emergency Pending");
                           else if (Type == "NORMAL") localStorage.setItem("TitleString", "Pickup Pending");
                           else if (Type == "COMPLETED") localStorage.setItem("TitleString", "Pickup Done");
+                          
+                          $("#divTitle").html(localStorage.getItem("TitleString"));
+                          var localStorageList1 = localStorage.getItem("list1Data");
+                          if (localStorageList1 != null && localStorageList1 != "") {
+                          Data = JSON.parse(localStorageList1);
+                          fillData();
+                          }
                           
                           getDatas();
                           setInterval(getDatas, 30000);

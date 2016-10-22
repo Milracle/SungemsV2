@@ -39,6 +39,7 @@ if($arrLength == 19){
       'pickupAfterDays' => $arrValues[17],
       'comment' => $arrValues[18],      
       'createdDate' =>  $created_date,//date("Y-m-d H:i:s"),
+      'modifiedDate' =>  $created_date,//date("Y-m-d H:i:s"),
       'purchaseBy' => $buyer,
       'displayOnDate' => $displayOnDate
   );

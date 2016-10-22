@@ -11,7 +11,8 @@ $flag = $_POST["flag"];
     }
     foreach($values as $item) {
           $update = array(
-              'interfereBy' => $interferer
+            'interfereBy' => $interferer,
+            'modifiedDate' => getCurrentISTDate()
           );
           //Add the WHERE clauses
           $where_clause = array(

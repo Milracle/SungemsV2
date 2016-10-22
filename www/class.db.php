@@ -608,6 +608,20 @@ class DB
 		mysqli_close( $this->link );
 	}
 }
+$database = new DB();
+
+function checkNewData($syncDate){
+$database = new DB();
+  $query = "SELECT id FROM `Transaction` WHERE modifiedDate > '". $syncDate ."' LIMIT 1";
+  $rowsReturned = $database->num_rows( $query );
+  return $rowsReturned > 0;
+}
+
+function getCurrentISTDate(){
+  $date_utc = new DateTime(null, new DateTimeZone("UTC"));
+  $date_utc->setTimezone(new DateTimeZone('Asia/Kolkata'));
+  return  date_format($date_utc, 'Y-m-d H:i:s');
+}
 
 function sendResponse($status = 200, $body = '', $content_type = 'application/json')
 {
@@ -616,7 +630,6 @@ function sendResponse($status = 200, $body = '', $content_type = 'application/js
   header('Content-type: ' . $content_type);
   echo $body;
 }
-$database = new DB();
 // if($stmt = $conn -> prepare("INSERT INTO DailyImage (templeId, darshanDate, imageCount) VALUES (?,?,?)"))
 // {
 //    $totalImages = $index + 1;
