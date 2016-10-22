@@ -189,7 +189,7 @@
         function doPickup(isAdd) {
             var arrValue = [];
             for (var i = ArrSelectedIndex.length; i--;) {
-                var transaction = Datas[ArrSelectedIndex[i]];
+                var transaction = Values[ArrSelectedIndex[i]];
                 arrValue.push(transaction.id);
             }
             $.ajax({
