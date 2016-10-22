@@ -6,7 +6,7 @@ $regCount = 0;
 $doneCount = 0;
 $isSucceed = true;
 
-  $query = "SELECT DISTINCT pickupType, COUNT(pickupType) as Count FROM `Transaction` WHERE  isDeleted = false AND pickupBy = '' GROUP BY pickupType";
+  $query = "SELECT DISTINCT pickupType, COUNT(pickupType) as Count FROM `Transaction` WHERE  isDeleted = false AND pickupBy = '' AND displayOnDate < '". getCurrentISTDate() ."' GROUP BY pickupType";
   $results = $database->get_results( $query );
 if($results){
   foreach( $results as $row )
@@ -18,7 +18,7 @@ if($results){
     $isSucceed = false;
 }
 
-  $query = "SELECT COUNT(id) as Count FROM `Transaction` WHERE isDeleted = false AND pickupBy != ''";
+  $query = "SELECT COUNT(id) as Count FROM `Transaction` WHERE isDeleted = false AND displayOnDate < '". getCurrentISTDate() ."'  AND pickupBy != ''";
     $results = $database->get_row( $query );
     if($results){
          $doneCount = $results[0];

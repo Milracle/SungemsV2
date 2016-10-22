@@ -16,9 +16,9 @@ if(isset($_POST["type"])){
       $type = $_POST["type"];  
       $query = "";
       if($type == "COMPLETED")
-        $query = "SELECT DISTINCT companyName, interfereBy FROM `Transaction` WHERE  isDeleted = false AND pickupBy != ''";
+        $query = "SELECT DISTINCT companyName, interfereBy FROM `Transaction` WHERE isDeleted = false AND displayOnDate < '". getCurrentISTDate() ."'  AND pickupBy != ''";
       else
-        $query = "SELECT DISTINCT companyName, interfereBy FROM `Transaction` WHERE isDeleted = false AND pickupType = '". $type ."' AND pickupBy=''";
+        $query = "SELECT DISTINCT companyName, interfereBy FROM `Transaction` WHERE isDeleted = false AND displayOnDate < '". getCurrentISTDate() ."'  AND pickupType = '". $type ."' AND pickupBy=''";
 
       $results = $database->get_results( $query );
       foreach( $results as $row )

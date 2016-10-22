@@ -17,9 +17,9 @@ if(isset($_POST["companyName"]) && isset($_POST["isDone"])){
       $isDone = $_POST["isDone"];
         $query = "";
         if($isDone == "true"){
-            $query = "SELECT * FROM `Transaction` WHERE  isDeleted = false AND pickupBy != '' AND companyName = '".$companyName."' ORDER BY `pickupType`";
+            $query = "SELECT * FROM `Transaction` WHERE  isDeleted = false AND displayOnDate < '". getCurrentISTDate() ."'  AND pickupBy != '' AND companyName = '".$companyName."' ORDER BY `pickupType`";
         }else{
-            $query = "SELECT * FROM `Transaction` WHERE  isDeleted = false AND pickupBy = '' AND companyName = '".$companyName."' ORDER BY `pickupType`";
+            $query = "SELECT * FROM `Transaction` WHERE  isDeleted = false AND displayOnDate < '". getCurrentISTDate() ."'  AND pickupBy = '' AND companyName = '".$companyName."' ORDER BY `pickupType`";
         }
       $results = $database->get_results( $query );
       foreach( $results as $row )

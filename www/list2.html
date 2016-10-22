@@ -172,7 +172,7 @@
                 success: function (data) {
                     if (data.isSucceed) {
                         Data = data;
-                        localStorage.setItem("list2Data",JSON.stringify(Data));
+                        localStorage.setItem("list2Data" + Type + CompanyName,JSON.stringify(Data));
                         fillData();
                     }
                 },
@@ -290,9 +290,8 @@
             $("#detailHeader").html(CompanyName);
 
             if (CompanyName != "") {
-                var localStorageList2 = localStorage.getItem("list2Data");
+                var localStorageList2 = localStorage.getItem("list2Data" + Type + CompanyName);
                 if (localStorageList2 != null && localStorageList2 != "") {
-                    Data = JSON.parse(localStorageList2);
                     Data = JSON.parse(localStorageList2);
                     fillData();
                 }
