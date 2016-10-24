@@ -55,7 +55,7 @@
             <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
             <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pickup</h1>
             <a href="newtransaction.html" data-ajax='false' class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s' style="margin-right:60px;"><i class="zmdi zmdi-plus zmd-2x"></i></a>
-            <a href="javascript:;" onclick="getStats();"  class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s' ><i class="zmdi zmdi-replay zmd-2x"></i></a>
+            <a href="javascript:;" onclick="getStats();" class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s'><i class="zmdi zmdi-replay zmd-2x"></i></a>
 
         </div>
     </div>
@@ -95,6 +95,7 @@
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
             $.mobile.ajaxLinksEnabled(false);
+            $.mobile.allowCrossDomainPages = true;
         });
 
         function getStats() {
@@ -113,13 +114,14 @@
                     $("#DoneCount").html(data.DoneCount);
                     $("#RegularCount").html(data.RegularCount);
                 },
-      error: function (xhr, ajaxOptions, thrownError) {
-        alert("status: "+xhr.status+" msg: "+thrownError.message);
-      }
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("status: " + xhr.status + " msg: " + thrownError.message);
+                }
             });
         }
 
         $(document).ready(function () {
+            $.support.cors = true;
             getStats();
             setInterval(getStats, 30000);
         });
