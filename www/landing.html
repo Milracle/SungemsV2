@@ -113,7 +113,9 @@
                     $("#DoneCount").html(data.DoneCount);
                     $("#RegularCount").html(data.RegularCount);
                 },
-                error: function () {}
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert("status: "+xhr.status+" msg: "+thrownError.message);
+      }
             });
         }
 
