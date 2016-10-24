@@ -37,15 +37,19 @@
         }
         
         .indicatorRed {
-            background: rgba(0, 0, 0, 0) url("img/red.png") no-repeat scroll center center / 21px auto;
+            background: rgba(0, 0, 0, 0) url("img/red.png") no-repeat scroll;
             height: 22px;
             width: 40px;
+            background-size: 21px;
+            background-position: center center;
         }
         
         .indicatorGreen {
-            background: rgba(0, 0, 0, 0) url("img/green.png") no-repeat scroll center center / 21px auto;
+            background: rgba(0, 0, 0, 0) url("img/green.png") no-repeat scroll;
             height: 22px;
             width: 40px;
+            background-size: 21px;
+            background-position: center center;
         }
         
         .ui-table-columntoggle-btn {
@@ -96,7 +100,7 @@
         <div data-role="header" data-position="fixed" class="wow fadeIn">
             <a href="landing.html" data-ajax='false' class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-chevron-left zmd-2x"></i></a>
             <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pending</h1>
-            <a href="javascript:;" onclick="getDatas();" class="ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay" style="font-size: 1.4em;"></i></a>
+            <a href="javascript:;" onclick="getDatas();" class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s' ><i class="zmdi zmdi-replay zmd-2x"></i></a>
         </div>
 
         <div role="main" class="ui-content wow fadeIn" style="padding:2px 0 !important;" data-wow-delay="0.2s" data-inset="false">

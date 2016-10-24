@@ -18,7 +18,7 @@
             background-color: dimgrey;
             text-align: center;
             margin: 3px !important;
-            height: 28.6%;
+            height: 27%;
             padding: 2px;
         }
         
@@ -32,7 +32,7 @@
         
         .container {
             position: absolute;
-            top: 66px;
+            top: 86px;
             height: 100%;
             width: 100%;
             overflow-y: hidden;
@@ -51,10 +51,12 @@
 
         <nd2-include data-src="panel.left.html"></nd2-include>
 
-        <div data-role="header" data-position="fixed" class="wow fadeIn">
+        <div data-role="header" data-position="fixed" class="wow fadeIn" style="margin-top: 20px;">
             <a href="#leftpanel" class="ui-btn ui-btn-left wow fadeIn" data-wow-delay='0.8s'><i class="zmdi zmdi-menu"></i></a>
             <h1 class="wow fadeIn" id="divTitle" data-wow-delay='0.4s'>Pickup</h1>
-            <a href="javascript:;" onclick="getStats();" class="ui-btn-fab ui-btn-raised clr-warning ui-btn ui-btn-inline waves-effect waves-button waves-effect waves-button"><i class="zmdi zmdi-replay zmd-2x"></i></a>
+            <a href="newtransaction.html" data-ajax='false' class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s' style="margin-right:60px;"><i class="zmdi zmdi-plus zmd-2x"></i></a>
+            <a href="javascript:;" onclick="getStats();"  class="ui-btn ui-btn-right ui-btn-inline waves-effect waves-button waves-effect waves-button" data-wow-delay='0.8s' ><i class="zmdi zmdi-replay zmd-2x"></i></a>
+
         </div>
     </div>
 
@@ -69,7 +71,7 @@
         <a href="list1.html?type=NORMAL" data-ajax='false'>
 
             <div class="card-supporting-text card">
-                <p>General Pickup Pending</p>
+                <p>Normal Pickup Pending</p>
                 <p id="RegularCount">0</p>
             </div>
         </a>

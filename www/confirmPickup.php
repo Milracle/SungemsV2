@@ -6,7 +6,9 @@ $id = (int)($_POST["transactionId"]);
 $pickupBy = $_POST["pickupBy"];
 
     $update = array(
-              'pickupBy' => $pickupBy
+              'pickupBy' => $pickupBy,
+              'modifiedDate' => getCurrentISTDate(),
+              'pickupDate' => getCurrentISTDate()
           );
           //Add the WHERE clauses
           $where_clause = array(

@@ -65,7 +65,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#buyer').val(localStorage.getItem("Username"));
-            $("#btnSave").click(function () {
+            $("#btnSave").click(function () {                
                 var buyerToSend = $('#buyer').val();
                 var stringToSend = $('#string').val();
                 var partsOfStr = stringToSend.split('~');
@@ -85,20 +85,28 @@
                         },
                         success: function (data) {
                             if (data.isSucceed) {
-                                window.location = "landing.html";
+                                showSuccessToast("New Transaction Added!");
+                                $('#string').val("");
                             } else {
-                                alert("Purchase Failed!");
+                                showSuccessToast("Purchase Failed! Server side issue!");
                             }
                         },
                         error: function () {
-                            alert("Purchase Failed!");
+                            showSuccessToast("Purchase Failed! Network issue!");
                         }
                     });
                 } else {
-                    alert("Incorrect string!");
+                    showSuccessToast("Incorrect string!");
                 }
             });
         });
+        
+        function showSuccessToast(msg){                
+            new $.nd2Toast({ // The 'new' keyword is important, otherwise you would overwrite the current toast instance
+               message : msg, // Required
+               ttl : 3000 // optional, time-to-live in ms (default: 3000)
+             });
+        }
     </script>
 </body>
 

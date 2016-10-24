@@ -43,6 +43,11 @@ if($arrLength == 19){
       'purchaseBy' => $buyer,
       'displayOnDate' => $displayOnDate
   );
+    
+    if($arrValues[16] == "COMPLETED"){
+      $values['pickupBy'] = $buyer;
+    }
+
   $add_query = $database->insert( 'Transaction', $values );
 
   sendResponse(200, json_encode(array('isSucceed' => $add_query)));
