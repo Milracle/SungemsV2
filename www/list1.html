@@ -144,6 +144,7 @@
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
             $.mobile.ajaxLinksEnabled(false);
+            $.mobile.allowCrossDomainPages = true;
         });
         var Type = "";
         var Company = [];
@@ -290,6 +291,8 @@
         }
 
         $(document).ready(function () {
+            $.support.cors = true;
+            
             Type = getParameterByName("type");
             if (Type != "") {
                 localStorage.setItem("type", Type);

@@ -149,6 +149,7 @@
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
             $.mobile.ajaxLinksEnabled(false);
+            $.mobile.allowCrossDomainPages = true;
         });
         var CompanyName = "";
         var ArrSelectedIndex = [];
@@ -280,6 +281,8 @@
         }
 
         $(document).ready(function () {
+            $.support.cors = true;
+
             $("#divTitle").html(localStorage.getItem("TitleString"));
             CompanyName = getParameterByName("companyName");
             if (CompanyName != "") {
