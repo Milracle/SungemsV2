@@ -92,12 +92,11 @@
     <script src="js/nd2settings.js"></script>
     <script src="js/moment.js"></script>
     <script src="js/common.js"></script>
-    <script type="text/javascript">
-            jQuery.support.cors = true;
-        
+    <script type="text/javascript">        
         $(document).bind("mobileinit", function () {
             $.mobile.ajaxLinksEnabled(false);
             $.mobile.allowCrossDomainPages = true;
+            $.support.cors = true;
         });
 
         function getStats() {
