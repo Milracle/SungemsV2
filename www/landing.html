@@ -93,6 +93,8 @@
     <script src="js/moment.js"></script>
     <script src="js/common.js"></script>
     <script type="text/javascript">
+            jQuery.support.cors = true;
+        
         $(document).bind("mobileinit", function () {
             $.mobile.ajaxLinksEnabled(false);
             $.mobile.allowCrossDomainPages = true;
@@ -121,7 +123,6 @@
         }
 
         $(document).ready(function () {
-            $.support.cors = true;
             getStats();
             setInterval(getStats, 30000);
         });
