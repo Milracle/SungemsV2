@@ -18,6 +18,11 @@ if($arrLength == 19){
   $displayOnDate->add(new DateInterval($pickupAfterDays));
   $displayOnDate=date_format($displayOnDate, 'Y-m-d H:i:s');
     
+  $date_for_eme = new DateTime(null, new DateTimeZone("UTC"));
+  $date_for_eme->setTimezone(new DateTimeZone('Asia/Kolkata'));
+  $date_for_eme->modify('+1 day');
+  $emergency_date=date_format($date_for_eme, 'Y-m-d');
+    
   $values = array(
       'companyName' => $arrValues[0],
       'GIA' => $arrValues[1],
@@ -41,7 +46,8 @@ if($arrLength == 19){
       'createdDate' =>  $created_date,//date("Y-m-d H:i:s"),
       'modifiedDate' =>  $created_date,//date("Y-m-d H:i:s"),
       'purchaseBy' => $buyer,
-      'displayOnDate' => $displayOnDate
+      'displayOnDate' => $displayOnDate,
+      'emergencyAfter' => $emergency_date
   );
     
     if($arrValues[16] == "COMPLETED"){

@@ -255,6 +255,8 @@
                 var checked = "";
                 if (in_array(ArrSelectedIndex, i)) checked = "checked";
 
+                var dt = new moment(transaction.createdDate);
+
                 $("#table-column-toggle tbody").append('<tr class="cell">' +
                     "<td class='selection'><input type='checkbox' class='checkbox' onclick='chk(" + i + ");' id='" + i + "' " + checked + "></td>" +
                     '<td class="' + indicator + '"> </td>' +
@@ -272,7 +274,7 @@
                     transaction.size + ' ' + transaction.color + ' ' + transaction.purity + ' ' + transaction.cut + ' ' + transaction.polish + ' ' + transaction.symmetry + ' ' + transaction.bill +
                     '</div>' +
                     '<div class="rightContent">' +
-                    transaction.purchaseBy +
+                    transaction.purchaseBy + " (" + dt.format("DD/MM") + ")" +
                     '</div>' +
                     '</div>' +
                     '</td>' +
@@ -306,7 +308,7 @@
                 }
                 
                 getDatas();
-                setInterval(getDatas, 30000);
+                setInterval(getDatas, 20000);
             }
 
             $("#btnPickup").click(function () {
